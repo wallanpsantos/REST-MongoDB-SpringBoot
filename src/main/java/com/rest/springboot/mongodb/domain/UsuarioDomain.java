@@ -1,9 +1,12 @@
 package com.rest.springboot.mongodb.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,11 +15,14 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collation = "usuario")
 public class UsuarioDomain implements Serializable {
 
     private static final Long serialVersionUID = 1L;
 
+    @Id
     private Integer id;
+
     private String nome;
     private String email;
 
