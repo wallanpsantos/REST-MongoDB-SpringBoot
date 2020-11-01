@@ -49,4 +49,19 @@ public class UsuarioService {
 
         return usuarioRepository.insert(usuarioDomain);
     }
+
+    /**
+     * Metodo responsavel por deletar usuario pelo ID
+     *
+     * @param id
+     */
+    public void deletarUsuario(String id) {
+        Optional<UsuarioDomain> usuarioDomain = usuarioRepository.findById(id);
+
+        if (!usuarioDomain.isPresent()) {
+            throw new ObjetoNaoEncontradoException("Usuario com identificação: " + id + " não encontrado!");
+        } else {
+            usuarioRepository.deleteById(id);
+        }
+    }
 }
