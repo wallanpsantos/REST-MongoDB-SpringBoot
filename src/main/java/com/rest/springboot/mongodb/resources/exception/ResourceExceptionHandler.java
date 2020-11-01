@@ -52,6 +52,6 @@ public class ResourceExceptionHandler {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", new Locale("pt", "BR"));
         Date date = new Date(System.currentTimeMillis());
 
-        return String.valueOf(simpleDateFormat.format(date));
+        return simpleDateFormat.format(date);
     }
 }

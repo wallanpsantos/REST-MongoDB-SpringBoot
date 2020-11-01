@@ -5,11 +5,10 @@ import com.rest.springboot.mongodb.dto.UsuarioDTO;
 import com.rest.springboot.mongodb.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,6 +36,17 @@ public class UsuarioResource {
         Optional<UsuarioDomain> usuarioDomain = usuarioService.procuraUsuario(id);
 
         return ResponseEntity.ok().body(new UsuarioDTO(usuarioDomain.get()));
+    }
+
+    @PostMapping("/inserir")
+    public ResponseEntity<Void> inserirUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        UsuarioDomain usuarioDomain = usuarioDTO.UsarioInstanciaDTO(usuarioDTO);
+        usuarioDomain = usuarioService.adicionaNovoUsuario(usuarioDomain);
+
+        // Pega o id/endereço do novo usuario/objeto inserido
+        URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuarioDomain.getId()).toUri();
+
+        return ResponseEntity.created(url).build();
     }
 
 }

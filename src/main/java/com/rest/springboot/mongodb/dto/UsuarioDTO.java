@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 @Setter
 @Getter
@@ -26,5 +25,23 @@ public class UsuarioDTO implements Serializable {
         this.id = usuarioDomain.getId();
         this.nome = usuarioDomain.getNome();
         this.email = usuarioDomain.getEmail();
+    }
+
+    /**
+     * Metodo responsavel por realizar a instancia de um usuario
+     * utilizado para inserção de novos usuarios
+     *
+     * @param usuarioDTO
+     * @return new UsuarioDomain()
+     */
+    public UsuarioDomain UsarioInstanciaDTO(UsuarioDTO usuarioDTO) {
+
+        UsuarioDomain usuarioDomain = new UsuarioDomain();
+
+        usuarioDomain.setId(usuarioDTO.getId());
+        usuarioDomain.setNome(usuarioDTO.getNome());
+        usuarioDomain.setEmail(usuarioDTO.getEmail());
+
+        return usuarioDomain;
     }
 }
