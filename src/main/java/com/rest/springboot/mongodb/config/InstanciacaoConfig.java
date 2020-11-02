@@ -2,6 +2,7 @@ package com.rest.springboot.mongodb.config;
 
 import com.rest.springboot.mongodb.domain.PostagemDomain;
 import com.rest.springboot.mongodb.domain.UsuarioDomain;
+import com.rest.springboot.mongodb.dto.AutorPostagemDTO;
 import com.rest.springboot.mongodb.repository.PostagemRepository;
 import com.rest.springboot.mongodb.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +96,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
     public List<PostagemDomain> postagensIniciais() throws ParseException {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("BRT"));
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         List<UsuarioDomain> usuarioDomain = usuarioIniciais();
 
@@ -106,7 +107,8 @@ public class InstanciacaoConfig implements CommandLineRunner {
         postagemDomain1.setDataPostagem(simpleDateFormat.parse("02/11/2020 17:30"));
         postagemDomain1.setTitulo("Em busca do One Piece");
         postagemDomain1.setConteudo("Me torna os rei dos piratas!!!");
-        postagemDomain1.setAutor(usuarioDomain.get(0));
+        /* O new AutorPostagemDTO() foi utilizado para persistir os objetos UsuarioDomain antes de relacionar */
+        postagemDomain1.setAutorPostagemDTO(new AutorPostagemDTO(usuarioDomain.get(0)));
         listaDePostagens.add(postagemDomain1);
 
         PostagemDomain postagemDomain2 = new PostagemDomain();
@@ -114,7 +116,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
         postagemDomain2.setDataPostagem(simpleDateFormat.parse("07/10/2180 11:30"));
         postagemDomain2.setTitulo("Grande sonho");
         postagemDomain2.setConteudo("Se o maior piratas de todos");
-        postagemDomain2.setAutor(usuarioDomain.get(1));
+        postagemDomain2.setAutorPostagemDTO(new AutorPostagemDTO(usuarioDomain.get(1)));
         listaDePostagens.add(postagemDomain2);
 
         PostagemDomain postagemDomain3 = new PostagemDomain();
@@ -122,7 +124,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
         postagemDomain3.setDataPostagem(simpleDateFormat.parse("25/11/2750 13:00"));
         postagemDomain3.setTitulo("Mapas");
         postagemDomain3.setConteudo("Quero desenhar o maior mapa do mundo!");
-        postagemDomain3.setAutor(usuarioDomain.get(1));
+        postagemDomain3.setAutorPostagemDTO(new AutorPostagemDTO(usuarioDomain.get(1)));
         listaDePostagens.add(postagemDomain3);
 
         return listaDePostagens;

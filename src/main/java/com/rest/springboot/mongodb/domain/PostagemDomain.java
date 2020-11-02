@@ -1,5 +1,6 @@
 package com.rest.springboot.mongodb.domain;
 
+import com.rest.springboot.mongodb.dto.AutorPostagemDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,5 @@ public class PostagemDomain implements Serializable {
     private Date dataPostagem;
     private String titulo;
     private String conteudo;
-    private UsuarioDomain autor;
-
+    private AutorPostagemDTO autorPostagemDTO;
 }
