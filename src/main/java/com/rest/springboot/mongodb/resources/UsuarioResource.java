@@ -55,4 +55,14 @@ public class UsuarioResource {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> atualizarUsuario(@PathVariable("id") String id, @RequestBody UsuarioDTO usuarioDTO) {
+
+        UsuarioDomain usuarioDomain = usuarioDTO.UsarioInstanciaDTO(usuarioDTO);
+
+        usuarioDomain.setId(id);
+        usuarioDomain = usuarioService.atualizarUsuario(usuarioDomain);
+
+        return ResponseEntity.noContent().build();
+    }
 }

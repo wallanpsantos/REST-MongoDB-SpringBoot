@@ -1,6 +1,7 @@
 package com.rest.springboot.mongodb.services;
 
 import com.rest.springboot.mongodb.domain.UsuarioDomain;
+import com.rest.springboot.mongodb.dto.UsuarioDTO;
 import com.rest.springboot.mongodb.exceptions.ObjetoNaoEncontradoException;
 import com.rest.springboot.mongodb.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,27 @@ public class UsuarioService {
         } else {
             usuarioRepository.deleteById(id);
         }
+    }
+
+    /**
+     * Metodo reposavel por buscar um usuario pelo ID e atualizar
+     * os dados passado no parametro
+     *
+     * @param novoDadosUsuario
+     * @return novoDadosUsuario
+     */
+    public UsuarioDomain atualizarUsuario(UsuarioDomain novoDadosUsuario) {
+
+        Optional<UsuarioDomain> atualizarUsuario = usuarioRepository.findById(novoDadosUsuario.getId());
+
+        if (!atualizarUsuario.isPresent()) {
+            throw new ObjetoNaoEncontradoException("Usuario com identificação: " +
+                    novoDadosUsuario.getId() + " não encontrado!");
+        }
+
+        atualizarUsuario.get().setNome(novoDadosUsuario.getNome());
+        atualizarUsuario.get().setEmail(novoDadosUsuario.getEmail());
+
+        return usuarioRepository.save(atualizarUsuario.get());
     }
 }
