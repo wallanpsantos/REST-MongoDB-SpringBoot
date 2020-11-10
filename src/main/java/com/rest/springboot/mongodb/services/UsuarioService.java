@@ -1,7 +1,6 @@
 package com.rest.springboot.mongodb.services;
 
 import com.rest.springboot.mongodb.domain.UsuarioDomain;
-import com.rest.springboot.mongodb.dto.UsuarioDTO;
 import com.rest.springboot.mongodb.exceptions.ObjetoNaoEncontradoException;
 import com.rest.springboot.mongodb.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

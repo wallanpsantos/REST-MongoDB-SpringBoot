@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -45,62 +45,36 @@ public class InstanciacaoConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
         usuarioRepository.deleteAll();
         postagemRepository.deleteAll();
 
-        for (UsuarioDomain usuarioDomain : usuarioIniciais()) {
-            usuarioRepository.insert(usuarioDomain);
-        }
-
-        for (PostagemDomain postagemDomain : postagensIniciais()) {
-            postagemRepository.insert(postagemDomain);
-        }
-    }
-
-    /**
-     * Metodo reposanvel por instanciar alguns usuario na base da dados para fins de testes
-     *
-     * @return listaUsuarioDomain
-     */
-    public List<UsuarioDomain> usuarioIniciais() {
-
-        List<UsuarioDomain> listaUsuarioDomain = new ArrayList<>();
+        List<UsuarioDomain> listaUsuarios = new ArrayList<>();
+        List<PostagemDomain> listaDePostagens = new ArrayList<>();
 
         UsuarioDomain usuarioDomain1 = new UsuarioDomain();
         usuarioDomain1.setId(null);
         usuarioDomain1.setNome("Luffy");
         usuarioDomain1.setEmail("luffy@gmail.com");
-        listaUsuarioDomain.add(usuarioDomain1);
+        listaUsuarios.add(usuarioDomain1);
 
         UsuarioDomain usuarioDomain2 = new UsuarioDomain();
         usuarioDomain2.setId(null);
         usuarioDomain2.setNome("Nami");
         usuarioDomain2.setEmail("nami@gmail.com");
-        listaUsuarioDomain.add(usuarioDomain2);
+        listaUsuarios.add(usuarioDomain2);
 
         UsuarioDomain usuarioDomain3 = new UsuarioDomain();
         usuarioDomain3.setId(null);
         usuarioDomain3.setNome("Zoro");
         usuarioDomain3.setEmail("zoro@gmail.com");
-        listaUsuarioDomain.add(usuarioDomain3);
+        listaUsuarios.add(usuarioDomain3);
 
-        return listaUsuarioDomain;
-    }
-
-    /**
-     * Metodo reposnavel por retornar uma lista de postagens
-     *
-     * @return listaDePostagens
-     * @throws ParseException
-     */
-    public List<PostagemDomain> postagensIniciais() throws ParseException {
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-
-        List<UsuarioDomain> usuarioDomain = usuarioIniciais();
-
-        List<PostagemDomain> listaDePostagens = new ArrayList<>();
+        for (UsuarioDomain usuarioDomain : listaUsuarios) {
+            usuarioRepository.insert(usuarioDomain);
+        }
 
         PostagemDomain postagemDomain1 = new PostagemDomain();
         postagemDomain1.setId(null);
@@ -108,7 +82,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
         postagemDomain1.setTitulo("Em busca do One Piece");
         postagemDomain1.setConteudo("Me torna os rei dos piratas!!!");
         /* O new AutorPostagemDTO() foi utilizado para persistir os objetos UsuarioDomain antes de relacionar */
-        postagemDomain1.setAutorPostagemDTO(new AutorPostagemDTO(usuarioDomain.get(0)));
+        postagemDomain1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
         listaDePostagens.add(postagemDomain1);
 
         PostagemDomain postagemDomain2 = new PostagemDomain();
@@ -116,7 +90,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
         postagemDomain2.setDataPostagem(simpleDateFormat.parse("07/10/2180 11:30"));
         postagemDomain2.setTitulo("Grande sonho");
         postagemDomain2.setConteudo("Se o maior piratas de todos");
-        postagemDomain2.setAutorPostagemDTO(new AutorPostagemDTO(usuarioDomain.get(1)));
+        postagemDomain2.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
         listaDePostagens.add(postagemDomain2);
 
         PostagemDomain postagemDomain3 = new PostagemDomain();
@@ -124,9 +98,14 @@ public class InstanciacaoConfig implements CommandLineRunner {
         postagemDomain3.setDataPostagem(simpleDateFormat.parse("25/11/2750 13:00"));
         postagemDomain3.setTitulo("Mapas");
         postagemDomain3.setConteudo("Quero desenhar o maior mapa do mundo!");
-        postagemDomain3.setAutorPostagemDTO(new AutorPostagemDTO(usuarioDomain.get(1)));
+        postagemDomain3.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(1)));
         listaDePostagens.add(postagemDomain3);
 
-        return listaDePostagens;
+        for (PostagemDomain postagemDomain : listaDePostagens) {
+            postagemRepository.insert(postagemDomain);
+        }
+
+        listaUsuarios.get(0).getPostagens().addAll(Arrays.asList(listaDePostagens.get(0), listaDePostagens.get(1)));
+        usuarioRepository.save(listaUsuarios.get(0));
     }
 }
