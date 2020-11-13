@@ -1,5 +1,6 @@
 package com.rest.springboot.mongodb.resources;
 
+import com.rest.springboot.mongodb.domain.PostagemDomain;
 import com.rest.springboot.mongodb.domain.UsuarioDomain;
 import com.rest.springboot.mongodb.dto.UsuarioDTO;
 import com.rest.springboot.mongodb.services.UsuarioService;
@@ -35,7 +36,8 @@ public class UsuarioResource {
     public ResponseEntity<UsuarioDTO> procuraUsuario(@PathVariable String id) {
         Optional<UsuarioDomain> usuarioDomain = usuarioService.procuraUsuario(id);
 
-        return ResponseEntity.ok().body(new UsuarioDTO(usuarioDomain.get()));
+        return usuarioDomain.map(usuarioDomain1 -> ResponseEntity.ok().body(new UsuarioDTO(usuarioDomain1))).orElse(null);
+
     }
 
     @PostMapping("/inserir")
@@ -64,5 +66,18 @@ public class UsuarioResource {
         usuarioDomain = usuarioService.atualizarUsuario(usuarioDomain);
 
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Metodo responsavel por retornar postagens referente ao Id do usuario informado
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/{id}/postagens")
+    public ResponseEntity<List<PostagemDomain>> procuraPostagens(@PathVariable String id) {
+        Optional<UsuarioDomain> usuarioDomain = usuarioService.procuraUsuario(id);
+
+        return usuarioDomain.map(usuarioDomain1 -> ResponseEntity.ok().body(usuarioDomain1.getPostagens())).orElse(null);
     }
 }
