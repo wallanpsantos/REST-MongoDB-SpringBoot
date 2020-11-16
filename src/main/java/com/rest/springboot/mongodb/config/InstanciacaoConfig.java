@@ -3,6 +3,7 @@ package com.rest.springboot.mongodb.config;
 import com.rest.springboot.mongodb.domain.PostagemDomain;
 import com.rest.springboot.mongodb.domain.UsuarioDomain;
 import com.rest.springboot.mongodb.dto.AutorPostagemDTO;
+import com.rest.springboot.mongodb.dto.ComentariosDTO;
 import com.rest.springboot.mongodb.repository.PostagemRepository;
 import com.rest.springboot.mongodb.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Carga inicial de banco de dados
@@ -76,6 +74,22 @@ public class InstanciacaoConfig implements CommandLineRunner {
             usuarioRepository.insert(usuarioDomain);
         }
 
+//        ComentariosDTO comentariosDTO1 = new ComentariosDTO();
+//        comentariosDTO1.setTexto("Primeiro comentario");
+//        comentariosDTO1.setData(simpleDateFormat.parse("15/10/2020"));
+//        comentariosDTO1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
+//
+//        ComentariosDTO comentariosDTO2 = new ComentariosDTO();
+//        comentariosDTO1.setTexto("Segundo comentario");
+//        comentariosDTO1.setData(simpleDateFormat.parse("20/12/2020"));
+//        comentariosDTO1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
+//
+//        ComentariosDTO comentariosDTO3 = new ComentariosDTO();
+//        comentariosDTO1.setTexto("Terceiro comentario");
+//        comentariosDTO1.setData(simpleDateFormat.parse("01/12/2025"));
+//        comentariosDTO1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(1)));
+
+
         PostagemDomain postagemDomain1 = new PostagemDomain();
         postagemDomain1.setId(null);
         postagemDomain1.setDataPostagem(simpleDateFormat.parse("02/11/2020 17:30"));
@@ -104,6 +118,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
         for (PostagemDomain postagemDomain : listaDePostagens) {
             postagemRepository.insert(postagemDomain);
         }
+
 
         listaUsuarios.get(0).getPostagens().addAll(Arrays.asList(listaDePostagens.get(0), listaDePostagens.get(1)));
         usuarioRepository.save(listaUsuarios.get(0));
