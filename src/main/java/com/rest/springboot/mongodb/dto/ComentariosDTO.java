@@ -14,9 +14,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class ComentariosDTO implements Serializable {
 
-    private static final long SerialVersionUID = 1L;
+    private static final Long SerialVersionUID = 1L;
 
     private String texto;
     private Date data;
     private AutorPostagemDTO autorPostagemDTO;
+
+
 }

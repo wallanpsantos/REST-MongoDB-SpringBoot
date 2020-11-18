@@ -11,7 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Carga inicial de banco de dados
@@ -51,6 +54,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
 
         List<UsuarioDomain> listaUsuarios = new ArrayList<>();
         List<PostagemDomain> listaDePostagens = new ArrayList<>();
+        List<ComentariosDTO> listaComentariosDTO = new ArrayList<>();
 
         UsuarioDomain usuarioDomain1 = new UsuarioDomain();
         usuarioDomain1.setId(null);
@@ -74,21 +78,17 @@ public class InstanciacaoConfig implements CommandLineRunner {
             usuarioRepository.insert(usuarioDomain);
         }
 
-//        ComentariosDTO comentariosDTO1 = new ComentariosDTO();
-//        comentariosDTO1.setTexto("Primeiro comentario");
-//        comentariosDTO1.setData(simpleDateFormat.parse("15/10/2020"));
-//        comentariosDTO1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
-//
-//        ComentariosDTO comentariosDTO2 = new ComentariosDTO();
-//        comentariosDTO1.setTexto("Segundo comentario");
-//        comentariosDTO1.setData(simpleDateFormat.parse("20/12/2020"));
-//        comentariosDTO1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
-//
-//        ComentariosDTO comentariosDTO3 = new ComentariosDTO();
-//        comentariosDTO1.setTexto("Terceiro comentario");
-//        comentariosDTO1.setData(simpleDateFormat.parse("01/12/2025"));
-//        comentariosDTO1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(1)));
+        ComentariosDTO comentariosDTO1 = new ComentariosDTO();
+        comentariosDTO1.setTexto("Primeiro comentario");
+        comentariosDTO1.setData(simpleDateFormat.parse("15/10/2020 12:30"));
+        comentariosDTO1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
+        listaComentariosDTO.add(comentariosDTO1);
 
+        ComentariosDTO comentariosDTO2 = new ComentariosDTO();
+        comentariosDTO2.setTexto("Segundo comentario");
+        comentariosDTO2.setData(simpleDateFormat.parse("20/12/2020 10:22"));
+        comentariosDTO2.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
+        listaComentariosDTO.add(comentariosDTO2);
 
         PostagemDomain postagemDomain1 = new PostagemDomain();
         postagemDomain1.setId(null);
@@ -97,6 +97,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
         postagemDomain1.setConteudo("Me torna os rei dos piratas!!!");
         /* O new AutorPostagemDTO() foi utilizado para persistir os objetos UsuarioDomain antes de relacionar */
         postagemDomain1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
+        postagemDomain1.getComentariosDTOS().addAll(Arrays.asList(listaComentariosDTO.get(0), listaComentariosDTO.get(1)));
         listaDePostagens.add(postagemDomain1);
 
         PostagemDomain postagemDomain2 = new PostagemDomain();
