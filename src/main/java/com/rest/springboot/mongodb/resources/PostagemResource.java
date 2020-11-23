@@ -1,14 +1,13 @@
 package com.rest.springboot.mongodb.resources;
 
 import com.rest.springboot.mongodb.domain.PostagemDomain;
+import com.rest.springboot.mongodb.resources.utils.UrlResourceUtils;
 import com.rest.springboot.mongodb.services.PostagemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,5 +22,14 @@ public class PostagemResource {
         Optional<PostagemDomain> postagemDomain = postagemService.procuraPostagem(id);
 
         return postagemDomain.map(postagemDomain1 -> ResponseEntity.ok().body(postagemDomain1)).orElse(null);
+    }
+
+    @GetMapping(value = "/tituloPostagem")
+    public ResponseEntity<List<PostagemDomain>> procuraTituloPostagem(@RequestParam(value = "titulo") String titulo) {
+//        titulo = UrlResourceUtils.encodificarParametro(titulo);
+        titulo = UrlResourceUtils.decondificarParametro(titulo);
+        List<PostagemDomain> postagens = postagemService.procuraPorTitulo(titulo);
+
+        return ResponseEntity.ok().body(postagens);
     }
 }

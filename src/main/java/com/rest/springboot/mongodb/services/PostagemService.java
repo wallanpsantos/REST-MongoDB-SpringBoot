@@ -6,6 +6,7 @@ import com.rest.springboot.mongodb.repository.PostagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,5 +28,15 @@ public class PostagemService {
             throw new ObjetoNaoEncontradoException("Postagem com identificação: " + id + " não encontrado!");
         }
         return postagemDomain;
+    }
+
+    /**
+     * Metodo responsavel por retornar uma lista de postagem por titulo
+     *
+     * @param titulo
+     * @return postagemRepository
+     */
+    public List<PostagemDomain> procuraPorTitulo(String titulo) {
+        return postagemRepository.findByTituloContaining(titulo);
     }
 }

@@ -4,6 +4,8 @@ import com.rest.springboot.mongodb.domain.PostagemDomain;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Um Repository (Repositório) é um objeto que isola os objetos ou
  * entidades do domínio do código que acessa o banco de dados.
@@ -17,4 +19,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PostagemRepository extends MongoRepository<PostagemDomain, String> {
+
+    List<PostagemDomain> findByTituloContaining(String titulo);
+
 }
