@@ -39,4 +39,15 @@ public class PostagemService {
     public List<PostagemDomain> procuraPorTitulo(String titulo) {
         return postagemRepository.findByTituloContainingIgnoreCase(titulo);
     }
+
+    /**
+     * Metodo responsavel por procurar titulo de postagem utilizando Regex
+     * do https://docs.mongodb.com/manual/reference/operator/query/regex/
+     *
+     * @param titulo
+     * @return postagemRepository
+     */
+    public List<PostagemDomain> regexProcuraPorTitulo(String titulo) {
+        return postagemRepository.searchTitulo(titulo);
+    }
 }

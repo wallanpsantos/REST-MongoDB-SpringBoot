@@ -28,6 +28,8 @@ public class PostagemResource {
     public ResponseEntity<List<PostagemDomain>> procuraTituloPostagem(@RequestParam(value = "titulo") String titulo) {
 //        titulo = UrlResourceUtils.encodificarParametro(titulo);
         titulo = UrlResourceUtils.decondificarParametro(titulo);
+
+//        List<PostagemDomain> postagens = postagemService.regexProcuraPorTitulo(titulo);
         List<PostagemDomain> postagens = postagemService.procuraPorTitulo(titulo);
 
         return ResponseEntity.ok().body(postagens);

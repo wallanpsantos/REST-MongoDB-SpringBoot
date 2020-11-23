@@ -2,6 +2,7 @@ package com.rest.springboot.mongodb.repository;
 
 import com.rest.springboot.mongodb.domain.PostagemDomain;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,6 +20,9 @@ import java.util.List;
  */
 @Repository
 public interface PostagemRepository extends MongoRepository<PostagemDomain, String> {
+
+    @Query("{ 'titulo' : { $regex: ?0 : $options: 'i' } }")
+    List<PostagemDomain> searchTitulo(String titulo);
 
     List<PostagemDomain> findByTituloContainingIgnoreCase(String titulo);
 
