@@ -37,6 +37,6 @@ public class PostagemService {
      * @return postagemRepository
      */
     public List<PostagemDomain> procuraPorTitulo(String titulo) {
-        return postagemRepository.findByTituloContaining(titulo);
+        return postagemRepository.findByTituloContainingIgnoreCase(titulo);
     }
 }

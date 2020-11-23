@@ -20,6 +20,6 @@ import java.util.List;
 @Repository
 public interface PostagemRepository extends MongoRepository<PostagemDomain, String> {
 
-    List<PostagemDomain> findByTituloContaining(String titulo);
+    List<PostagemDomain> findByTituloContainingIgnoreCase(String titulo);
 
 }
