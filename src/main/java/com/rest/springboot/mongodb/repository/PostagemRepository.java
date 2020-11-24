@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,5 +26,13 @@ public interface PostagemRepository extends MongoRepository<PostagemDomain, Stri
     List<PostagemDomain> searchTitulo(String titulo);
 
     List<PostagemDomain> findByTituloContainingIgnoreCase(String titulo);
+
+    @Query("{ $and [{ date: { $gte: ?1 } }," +
+            "       { date: { $lte: ?2 } }," +
+            "       { $or: [ {'titulo': { $regex: ?0 : $options: 'i' }}, " +
+            "               { 'conteudo': { $regex: ?0 : $options: 'i' }}, " +
+            "               { 'comentariosDTOS.texto': { $regex: ?0 : $options: 'i' }} ]}" +
+            "]}")
+    List<PostagemDomain> fullSearch(String titulo, Date dataMinima, Date dataMaxima);
 
 }

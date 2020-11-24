@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,21 @@ public class PostagemResource {
 
 //        List<PostagemDomain> postagens = postagemService.regexProcuraPorTitulo(titulo);
         List<PostagemDomain> postagens = postagemService.procuraPorTitulo(titulo);
+
+        return ResponseEntity.ok().body(postagens);
+    }
+
+    @GetMapping(value = "/pesquisa")
+    public ResponseEntity<List<PostagemDomain>> pesquisaFiltrada(
+            @RequestParam(value = "texto") String texto,
+            @RequestParam(value = "dataMinima") String dataMinima,
+            @RequestParam(value = "dataMaxima") String dataMaxima) {
+
+        texto = UrlResourceUtils.decondificarParametro(texto);
+        Date minDate = UrlResourceUtils.converteData(dataMinima, new Date(0L));
+        Date maxDate = UrlResourceUtils.converteData(dataMaxima, new Date());
+
+        List<PostagemDomain> postagens = postagemService.fullSearch(texto, minDate, maxDate);
 
         return ResponseEntity.ok().body(postagens);
     }

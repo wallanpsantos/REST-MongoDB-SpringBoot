@@ -6,6 +6,7 @@ import com.rest.springboot.mongodb.repository.PostagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,5 +50,20 @@ public class PostagemService {
      */
     public List<PostagemDomain> regexProcuraPorTitulo(String titulo) {
         return postagemRepository.searchTitulo(titulo);
+    }
+
+    /**
+     * Metodo responsal por procurar com muito criterios de aceite
+     * por titulo ou corpo da postagem e diferença de data
+     *
+     * @param titulo
+     * @param dataMinima
+     * @param dataMaxima
+     * @return postagemRepository
+     */
+    public List<PostagemDomain> fullSearch(String titulo, Date dataMinima, Date dataMaxima) {
+        dataMaxima = new Date(dataMaxima.getTime() + (24 * 60 * 60 * 100));
+
+        return postagemRepository.fullSearch(titulo, dataMinima, dataMaxima);
     }
 }

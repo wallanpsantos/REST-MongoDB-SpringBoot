@@ -80,13 +80,13 @@ public class InstanciacaoConfig implements CommandLineRunner {
 
         ComentariosDTO comentariosDTO1 = new ComentariosDTO();
         comentariosDTO1.setTexto("Primeiro comentario");
-        comentariosDTO1.setData(simpleDateFormat.parse("15/10/2020 12:30"));
+        comentariosDTO1.setData(simpleDateFormat.parse("15/10/2015 12:30"));
         comentariosDTO1.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
         listaComentariosDTO.add(comentariosDTO1);
 
         ComentariosDTO comentariosDTO2 = new ComentariosDTO();
         comentariosDTO2.setTexto("Segundo comentario");
-        comentariosDTO2.setData(simpleDateFormat.parse("20/12/2020 10:22"));
+        comentariosDTO2.setData(simpleDateFormat.parse("20/12/2012 10:22"));
         comentariosDTO2.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(0)));
         listaComentariosDTO.add(comentariosDTO2);
 
@@ -110,7 +110,7 @@ public class InstanciacaoConfig implements CommandLineRunner {
 
         PostagemDomain postagemDomain3 = new PostagemDomain();
         postagemDomain3.setId(null);
-        postagemDomain3.setDataPostagem(simpleDateFormat.parse("25/11/2750 13:00"));
+        postagemDomain3.setDataPostagem(simpleDateFormat.parse("25/11/1999 13:00"));
         postagemDomain3.setTitulo("Mapas");
         postagemDomain3.setConteudo("Quero desenhar o maior mapa do mundo!");
         postagemDomain3.setAutorPostagemDTO(new AutorPostagemDTO(listaUsuarios.get(1)));
