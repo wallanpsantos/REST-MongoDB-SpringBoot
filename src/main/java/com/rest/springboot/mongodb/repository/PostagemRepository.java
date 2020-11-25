@@ -22,17 +22,29 @@ import java.util.List;
 @Repository
 public interface PostagemRepository extends MongoRepository<PostagemDomain, String> {
 
-    @Query("{ 'titulo' : { $regex: ?0 : $options: 'i' } }")
+    @Query("{ 'titulo' : { $regex: ?0, $options: 'i' } }")
     List<PostagemDomain> searchTitulo(String titulo);
 
     List<PostagemDomain> findByTituloContainingIgnoreCase(String titulo);
 
-    @Query("{ $and [{ date: { $gte: ?1 } }," +
-            "       { date: { $lte: ?2 } }," +
-            "       { $or: [ {'titulo': { $regex: ?0 : $options: 'i' }}, " +
-            "               { 'conteudo': { $regex: ?0 : $options: 'i' }}, " +
-            "               { 'comentariosDTOS.texto': { $regex: ?0 : $options: 'i' }} ]}" +
-            "]}")
+    /**
+     * Metodo responsavel por fazer uma pesquisa passando conteudo e a data minima ou maxima
+     * <p>
+     * VERIFICAR METODO NÃO ESTÁ RETORNANDO CONTEUDO NO POSTMAN
+     *
+     * @param titulo
+     * @param dataMinima
+     * @param dataMaxima
+     * @return
+     */
+    @Query("{ $and: [ { date: {$gte: ?1} }," +
+            "         { date: { $lte: ?2} }," +
+            "       { $or: [ { 'titulo': { $regex: ?0, $options: 'i' } }," +
+            "                { 'conteudo': { $regex: ?0, $options: 'i' } }," +
+            "                { 'comentariosDTOS.texto': { $regex: ?0, $options: 'i' } } " +
+            "              ] " +
+            "       } ] " +
+            "}")
     List<PostagemDomain> fullSearch(String titulo, Date dataMinima, Date dataMaxima);
 
 }

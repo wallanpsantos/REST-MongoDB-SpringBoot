@@ -36,11 +36,11 @@ public class PostagemResource {
         return ResponseEntity.ok().body(postagens);
     }
 
-    @GetMapping(value = "/pesquisa")
+    @GetMapping(value = "/pesquisaFiltrada")
     public ResponseEntity<List<PostagemDomain>> pesquisaFiltrada(
-            @RequestParam(value = "texto") String texto,
-            @RequestParam(value = "dataMinima") String dataMinima,
-            @RequestParam(value = "dataMaxima") String dataMaxima) {
+            @RequestParam(value = "texto", defaultValue = "") String texto,
+            @RequestParam(value = "dataMinima", defaultValue = "") String dataMinima,
+            @RequestParam(value = "dataMaxima", defaultValue = "") String dataMaxima) {
 
         texto = UrlResourceUtils.decondificarParametro(texto);
         Date minDate = UrlResourceUtils.converteData(dataMinima, new Date(0L));

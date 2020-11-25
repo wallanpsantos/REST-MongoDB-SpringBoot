@@ -62,7 +62,7 @@ public class PostagemService {
      * @return postagemRepository
      */
     public List<PostagemDomain> fullSearch(String titulo, Date dataMinima, Date dataMaxima) {
-        dataMaxima = new Date(dataMaxima.getTime() + (24 * 60 * 60 * 100));
+        dataMaxima = new Date(dataMaxima.getTime() + (24 * 60 * 60 * 1000));
 
         return postagemRepository.fullSearch(titulo, dataMinima, dataMaxima);
     }
